@@ -21,7 +21,78 @@ const createElement = (tag, className) => {
     return element;
 }
 
-//função para criar a carta, que seria uma div carta com 2 div's dentro, uma face front e uma face back. Também adiciona uma imagem para o face front.
+//variáveia para guardar a informação da carta para saber se são iguais
+let firstCard = "";
+let secondCard = "";
+
+const checkEndGame = () => {
+    const disabledCards = document.querySelectorAll('.disabled-card');
+
+    if (disabledCards.length == 20) {
+        alert('Parabéns, você conseguiu!')
+    }
+}
+
+//para verificar se as 2 cartas de o data-character iguais
+const checkCards = () => {
+    const firstCharacter = firstCard.getAttribute('data-character');
+    const secondCharacter = secondCard.getAttribute('data-character');
+
+    if (firstCharacter == secondCharacter) {
+
+        firstCard.firstChild.classList.add('disabled-card');
+        secondCard.firstChild.classList.add('disabled-card');
+
+        //reseta as 2 let
+        firstCard = '';
+        secondCard = '';
+
+        checkEndGame();
+
+    } else {
+        //remove a class reveal-card (desvira as cartas) caso as caras sejam diferentes, e para o jogador ver colocamos um delay de 500ms
+        setTimeout(() => {
+
+            firstCard.classList.remove('reveal-card');
+            secondCard.classList.remove('reveal-card');
+
+            //reseta as 2 let
+            firstCard = '';
+            secondCard = '';
+
+        }, 500);
+        
+    }
+}
+
+//para quando clicar em uma das 2 cartas
+const revealCard = ({ target }) => {
+    //para quando a carta já estiver virada, ela não faça nada ao clicar de novo(bug)
+    if(target.parentNode.className.includes('reveal-card')){
+        return;
+    }
+
+    //verifica se a primeira carta está vazia
+    if (firstCard == '') {
+        //adiciona o class reveal-card na div card se já não estiver. ParentNode serve porque clicamos na face back e queremos que a class reveal-card seja criado no "pai" de face back, que seria a div card. 
+        target.parentNode.classList.add('reveal-card');
+
+        //a let firstCard recebe 
+        firstCard = target.parentNode;
+        
+    } else if (secondCard == ''){
+
+        target.parentNode.classList.add('reveal-card');
+        secondCard = target.parentNode;
+
+        checkCards();
+
+    }
+
+    
+}
+
+//função para criar a carta, que seria uma div carta com 2 div's dentro, uma face front e uma face back. Também adiciona uma imagem para o face front. Também cria um event.listener. Também cria um atributo (data-xxx)para saber se 2 cartas são iguais.
 const createCard = (character) => {
     const card = createElement('div', 'card');
     const front = createElement('div', 'face front');
@@ -31,6 +102,10 @@ const createCard = (character) => {
 
     card.appendChild(front);
     card.appendChild(back);
+
+    card.addEventListener('click', revealCard);
+
+    card.setAttribute('data-character', character)
 
     return card;
 }
