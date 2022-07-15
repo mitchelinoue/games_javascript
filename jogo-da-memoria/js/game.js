@@ -1,4 +1,6 @@
 const grid = document.querySelector('.grid');
+const spanPlayer = document.querySelector('.player');
+const timer = document.querySelector('.timer')
 
 //array com todas os personagens das cartas conforme as imagens 
 const characters = [
@@ -29,7 +31,8 @@ const checkEndGame = () => {
     const disabledCards = document.querySelectorAll('.disabled-card');
 
     if (disabledCards.length == 20) {
-        alert('Parabéns, você conseguiu!')
+        clearInterval(this.loop);
+        alert(`Parabéns ${apanPlayer.innerHTML}, você conseguiu! Seu tempo foi de: ${timer.innerHTML} segundos`);
     }
 }
 
@@ -125,4 +128,25 @@ const loadGame = () => {
     })
 }
 
-loadGame();
+const startTimer = () => {
+
+    //começa a contar o timer
+    this.loop = setInterval(() => {
+
+        const currentTimer = +timer.innerHTML;
+        timer.innerHTML = currentTimer +1;
+
+    }, 1000);
+
+}
+
+window.onload = () => {
+
+    //pega a key player do local storage e transforma na span player da página HTML com o nome do jogador
+    spanPlayer.innerHTML = localStorage.getItem('Player');
+
+    startTimer();
+
+    loadGame(); 
+}
+
