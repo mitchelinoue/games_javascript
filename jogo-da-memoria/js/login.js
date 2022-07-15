@@ -22,7 +22,8 @@ const handleSubmit = (event) => {
     event.preventDefault();
 
     //salva o valor do nome digitado (input.value) no parâmetro player que eu defini
-    localStorage.setItem('Player', input.value)
+    localStorage.setItem('Player', input.value);
+    window.location = 'pages/game.html'
 
 
 }
