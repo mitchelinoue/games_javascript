@@ -33,7 +33,6 @@
 }
 
 .front {
-    background-image: url(../images/jessica.png);
     transform: rotateY(180deg); /*serve para espelhar de volta a carta, pois ao virar ela a imagem é espelhada*/
 }
 
