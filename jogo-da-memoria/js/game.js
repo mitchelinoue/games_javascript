@@ -32,10 +32,10 @@ const checkEndGame = () => {
 
     if (disabledCards.length == 20) {
         clearInterval(this.loop);
-        alert(`Parabéns ${apanPlayer.innerHTML}, você conseguiu! Seu tempo foi de: ${timer.innerHTML} segundos`);
+        alert(`Parabéns ${spanPlayer.innerHTML}, você conseguiu! Seu tempo foi de: ${timer.innerHTML} segundos`);
     }
 }
-
+ 
 //para verificar se as 2 cartas de o data-character iguais
 const checkCards = () => {
     const firstCharacter = firstCard.getAttribute('data-character');
