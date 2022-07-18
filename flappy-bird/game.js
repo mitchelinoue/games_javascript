@@ -1,6 +1,6 @@
-console.log();
 
 
+let frames = 0;
 const somHit = new Audio();
 somHit.src = './sounds/hit.wav';
 
@@ -86,14 +86,15 @@ function criaChao() {
 function fazColisao(flappyBird, chao) {
     const flappyBirdY = flappyBird.y + flappyBird.altura;
     const chaoY = chao.y;
-
+  
     if(flappyBirdY >= chaoY) {
-        return true;
+      return true;
     }
+  
     return false;
-}
+  }
 
-  //passarinho
+//passarinho
 function criaFlappyBird() {
 
     const flappyBird = {
@@ -117,6 +118,7 @@ function criaFlappyBird() {
             if (fazColisao(flappyBird, globais.chao)) {
             console.log('Fez colisão');
             somHit.play();
+
             setTimeout(() => {
                 mudaParaTela(tela.INICIO)
             }, 500);
@@ -128,26 +130,41 @@ function criaFlappyBird() {
         },
 
         movimentos: [
-            { spriteX: 0, spriteY: 0}, //asa para cima
-            { spriteX: 0, spriteY: 26}, //asa no meio
-            { spriteX: 0, spriteY: 52}, //asa para baixo
-        ],
+            { spriteX: 0, spriteY: 0, }, // asa pra cima
+            { spriteX: 0, spriteY: 26, }, // asa no meio 
+            { spriteX: 0, spriteY: 52, }, // asa pra baixo
+            { spriteX: 0, spriteY: 26, }, // asa no meio 
+          ],
+
+        frameAtual: 0,
+        atualizaOFrameAtual() {     
+            const intervaloDeFrames = 10;
+            const passouOIntervalo = frames % intervaloDeFrames === 0;
+            
+      
+            if(passouOIntervalo) {
+              const baseDoIncremento = 1;
+              const incremento = baseDoIncremento + flappyBird.frameAtual;
+              const baseRepeticao = flappyBird.movimentos.length;
+              flappyBird.frameAtual = incremento % baseRepeticao
+            }
+        },
 
         desenha() {
-            const { spriteX, spriteY } = flappyBird.movimentos[2];
-            
+            flappyBird.atualizaOFrameAtual();
+            const { spriteX, spriteY } = flappyBird.movimentos[flappyBird.frameAtual];
+      
             contexto.drawImage(
-                sprites,
-                flappyBird.spriteX, flappyBird.spriteY,
-                flappyBird.largura, flappyBird.altura,
-                flappyBird.x, flappyBird.y,
-                flappyBird.largura, flappyBird.altura,
+              sprites,
+              spriteX, spriteY, // Sprite X, Sprite Y
+              flappyBird.largura, flappyBird.altura, // Tamanho do recorte na sprite
+              flappyBird.x, flappyBird.y,
+              flappyBird.largura, flappyBird.altura,
             );
-        },
-    };
-    return flappyBird;
+        }
+    }
+    return flappyBird;  
 }
-
 
 
 //tela de início
@@ -170,6 +187,30 @@ const mensagemGetReady = {
     },
 };
 
+function criaCanos() {
+    const canos = {
+        largura: 52,
+        altura: 400,
+        chao: {
+            spriteX: 0,
+            spriteY: 169,
+        },
+        espaco: 80,
+        desenha() {
+            const canoCeuX = 220;
+            const canoCeuY = 0;
+
+            contexto.drawImage(
+                sprites,
+                canos.ceu.spriteX, canos.ceu.spriteY,
+                canos.largura, canos.altura,
+                canoCeuX, canoCeuY,
+                canos.largura, canos.altura,
+            )
+        },
+    }
+    return canos;
+}
 
 const globais = {};
 let telaAtiva = {};
@@ -187,11 +228,13 @@ const tela = {
         inicializa() {
             globais.flappyBird = criaFlappyBird();
             globais.chao = criaChao();
+            globais.canos = criaCanos();
         },
         desenha() {
             planoDeFundo.desenha();
             globais.chao.desenha();
             globais.flappyBird.desenha();
+            globais.canos = desenha();
             mensagemGetReady.desenha();
         },
         click() {
@@ -214,6 +257,7 @@ tela.JOGO = {
     },
     atualiza() {
         globais.flappyBird.atualiza();
+        globais.chao.atualiza();
     }
 };
 
@@ -222,13 +266,14 @@ function loop() {
    telaAtiva.desenha();
    telaAtiva.atualiza();
 
+   frames = frames + 1;
     requestAnimationFrame(loop);
 }
 
 
 window.addEventListener('click', function() {
     if (telaAtiva.click) {
-        telaAtiva.click()
+        telaAtiva.click();
     }
 });
 
