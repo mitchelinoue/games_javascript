@@ -2,7 +2,8 @@ console.log();
 
 
 const somHit = new Audio();
-somHit.src = './sounds/hit.wav'
+somHit.src = './sounds/hit.wav';
+
 const sprites = new Image();
 sprites.src = './sprites.png';
 
@@ -41,32 +42,40 @@ const planoDeFundo = {
 };
 
 //chão
-const chao = {
-    spriteX: 0,
-    spriteY: 610,
-    largura: 224,
-    altura: 112,
-    x: 0,
-    y: canvas.height - 112,
 
-    desenha() {
-        contexto.drawImage(
-            sprites, // imagem source
-            chao.spriteX, chao.spriteY, //localização x e y no source (canto superior esquerdo)
-            chao.largura, chao.altura, // tamanho x e y da imagem no source
-            chao.x, chao.y, //localização x e y no canvas (canto superior esquerdo)
-            chao.largura, chao.altura, // tamanho x e y da imagem no canvas
-        );
+function criaChao() {
+    const chao = {
+        spriteX: 0,
+        spriteY: 610,
+        largura: 224,
+        altura: 112,
+        x: 0,
+        y: canvas.height - 112,
 
-        contexto.drawImage(
-            sprites,
-            chao.spriteX, chao.spriteY,
-            chao.largura, chao.altura,
-            (chao.x + chao.largura), chao.y,
-            chao.largura, chao.altura,
-        );
-    },
-};
+        atualiza(){
+
+        },
+
+        desenha() {
+            contexto.drawImage(
+                sprites, // imagem source
+                chao.spriteX, chao.spriteY, //localização x e y no source (canto superior esquerdo)
+                chao.largura, chao.altura, // tamanho x e y da imagem no source
+                chao.x, chao.y, //localização x e y no canvas (canto superior esquerdo)
+                chao.largura, chao.altura, // tamanho x e y da imagem no canvas
+            );
+
+            contexto.drawImage(
+                sprites,
+                chao.spriteX, chao.spriteY,
+                chao.largura, chao.altura,
+                (chao.x + chao.largura), chao.y,
+                chao.largura, chao.altura,
+            );
+        },
+    };
+}
+
 
 function fazColisao(flappyBird, chao) {
     const flappyBirdY = flappyBird.y + flappyBird.altura;
@@ -101,8 +110,10 @@ function criaFlappyBird() {
         atualiza() {
             if (fazColisao(flappyBird, chao)) {
             console.log('Fez colisão');
-
-            mudaParaTela(tela.INICIO);
+            somHit.play();
+            setTimeout(() => {
+                mudaParaTela(tela.INICIO)
+            }, 500);
             return;
             }
 
@@ -161,11 +172,11 @@ const tela = {
     INICIO: {
         inicializa() {
             globais.flappyBird = criaFlappyBird();
-
+            globais.chao = criaChao();
         },
         desenha() {
             planoDeFundo.desenha();
-            chao.desenha();
+            globais.chao.desenha();
             globais.flappyBird.desenha();
             mensagemGetReady.desenha();
         },
@@ -173,7 +184,7 @@ const tela = {
             mudaParaTela(tela.JOGO)
         },
         atualiza() {
-
+            globais.chao.atualiza();
         }
     }
 };
@@ -181,7 +192,7 @@ const tela = {
 tela.JOGO = {
     desenha() {
         planoDeFundo.desenha();
-        chao.desenha();
+        globais.chao.desenha();
         globais.flappyBird.desenha();
     },
     click() {
