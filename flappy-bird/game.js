@@ -78,44 +78,52 @@ function fazColisao(flappyBird, chao) {
     return false;
 }
 
+  //passarinho
+function criaFlappyBird() {
 
-//passarinho
-const flappyBird = {
-    spriteX: 0,
-    spriteY: 0,
-    largura: 33,
-    altura: 24,
-    x: 10,
-    y: 50,
-    pulo: 4.6,
-    pula() {
-        console.log('devo pular');
-        console.log('[ante]', flappyBird.velocidade);
-        flappyBird.velocidade = - flappyBird.pulo; 
-        console.log('[depois]', flappyBird.velocidade)
-    },
-    gravidade: 0.25,
-    velocidade:0, 
+    const flappyBird = {
+        spriteX: 0,
+        spriteY: 0,
+        largura: 33,
+        altura: 24,
+        x: 10,
+        y: 50,
+        pulo: 4.6,
+        pula() {
+            console.log('devo pular');
+            console.log('[ante]', flappyBird.velocidade);
+            flappyBird.velocidade = - flappyBird.pulo; 
+            console.log('[depois]', flappyBird.velocidade)
+        },
+        gravidade: 0.25,
+        velocidade:0, 
 
-    atualiza() {
-        if (fazColisao(flappyBird, chao)) {
-        console.log('Fez colisão');
-        }
+        atualiza() {
+            if (fazColisao(flappyBird, chao)) {
+            console.log('Fez colisão');
 
-        flappyBird.velocidade = flappyBird.velocidade + flappyBird.gravidade;
-        flappyBird.y = flappyBird.y + flappyBird.velocidade;
-    },
+            mudaParaTela(tela.INICIO);
+            return;
+            }
 
-    desenha() {
-        contexto.drawImage(
-            sprites,
-            flappyBird.spriteX, flappyBird.spriteY,
-            flappyBird.largura, flappyBird.altura,
-            flappyBird.x, flappyBird.y,
-            flappyBird.largura, flappyBird.altura,
-        );
-    },
-};
+            flappyBird.velocidade = flappyBird.velocidade + flappyBird.gravidade;
+            flappyBird.y = flappyBird.y + flappyBird.velocidade;
+        },
+
+        desenha() {
+            contexto.drawImage(
+                sprites,
+                flappyBird.spriteX, flappyBird.spriteY,
+                flappyBird.largura, flappyBird.altura,
+                flappyBird.x, flappyBird.y,
+                flappyBird.largura, flappyBird.altura,
+            );
+        },
+    };
+    return flappyBird;
+}
+
+
 
 //tela de início
 const mensagemGetReady = {
@@ -138,15 +146,23 @@ const mensagemGetReady = {
 };
 
 
-
+const globais = {};
 let telaAtiva = {};
 
 function mudaParaTela(novaTela) {
     telaAtiva = novaTela;
+
+    if(telaAtiva.inicializa) {
+        inicializa();
+    };
 };
 
 const tela = {
     INICIO: {
+        inicializa() {
+            globais.flappyBird = criaFlappyBird();
+
+        },
         desenha() {
             planoDeFundo.desenha();
             chao.desenha();
@@ -166,13 +182,13 @@ tela.JOGO = {
     desenha() {
         planoDeFundo.desenha();
         chao.desenha();
-        flappyBird.desenha();
+        globais.flappyBird.desenha();
     },
     click() {
-        flappyBird.pula();
+        globais.flappyBird.pula();
     },
     atualiza() {
-        flappyBird.atualiza();
+        globais.flappyBird.atualiza();
     }
 };
 
