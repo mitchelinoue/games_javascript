@@ -153,7 +153,7 @@ function mudaParaTela(novaTela) {
     telaAtiva = novaTela;
 
     if(telaAtiva.inicializa) {
-        inicializa();
+        telaAtiva.inicializa();
     };
 };
 
@@ -166,7 +166,7 @@ const tela = {
         desenha() {
             planoDeFundo.desenha();
             chao.desenha();
-            flappyBird.desenha();
+            globais.flappyBird.desenha();
             mensagemGetReady.desenha();
         },
         click() {
