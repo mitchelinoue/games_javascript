@@ -73,7 +73,7 @@ const flappyBird = {
     largura: 33,
     altura: 24,
     x: 10,
-    y: 10,
+    y: 50,
     gravidade: 0.25,
     velocidade:0, 
 
@@ -124,7 +124,13 @@ function mudaParaTela(novaTela) {
 const tela = {
     INICIO: {
         desenha() {
+            planoDeFundo.desenha();
+            chao.desenha();
+            flappyBird.desenha();
             mensagemGetReady.desenha();
+        },
+        click() {
+            mudaParaTela(tela.JOGO)
         },
         atualiza() {
 
@@ -151,5 +157,12 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-mudaParaTela(tela.INICIO)
+
+window.addEventListener('click', function() {
+    if (telaAtiva.click) {
+        telaAtiva.click()
+    }
+});
+
+mudaParaTela(tela.INICIO);
 loop ();
