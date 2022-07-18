@@ -52,8 +52,13 @@ function criaChao() {
         x: 0,
         y: canvas.height - 112,
 
-        atualiza(){
+        atualiza() {
+            const movimentoDoChao = 1;
+            const repeteEm = chao.largura/2;
+            const movimentacao = chao.x - movimentoDoChao;
+            chao.x = chao.x - movimentoDoChao;
 
+            chao.x = movimentacao % repeteEm;
         },
 
         desenha() {
@@ -74,6 +79,7 @@ function criaChao() {
             );
         },
     };
+    return chao;
 }
 
 
@@ -108,7 +114,7 @@ function criaFlappyBird() {
         velocidade:0, 
 
         atualiza() {
-            if (fazColisao(flappyBird, chao)) {
+            if (fazColisao(flappyBird, globais.chao)) {
             console.log('Fez colisão');
             somHit.play();
             setTimeout(() => {
@@ -121,7 +127,15 @@ function criaFlappyBird() {
             flappyBird.y = flappyBird.y + flappyBird.velocidade;
         },
 
+        movimentos: [
+            { spriteX: 0, spriteY: 0}, //asa para cima
+            { spriteX: 0, spriteY: 26}, //asa no meio
+            { spriteX: 0, spriteY: 52}, //asa para baixo
+        ],
+
         desenha() {
+            const { spriteX, spriteY } = flappyBird.movimentos[2];
+            
             contexto.drawImage(
                 sprites,
                 flappyBird.spriteX, flappyBird.spriteY,
