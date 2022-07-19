@@ -4,6 +4,16 @@ let frames = 0;
 const somHit = new Audio();
 somHit.src = './sounds/hit.wav';
 
+const somVoo = new Audio();
+somVoo.src = './sounds/pulo.wav';
+
+const somCaiu = new Audio();
+somCaiu.src = './sounds/caiu.wav';
+
+
+
+
+
 const sprites = new Image();
 sprites.src = './sprites.png';
 
@@ -107,6 +117,7 @@ function criaFlappyBird() {
         pulo: 4.5,
         pula() {
             flappyBird.velocidade = - flappyBird.pulo; 
+            somVoo.play();
         },
         gravidade: 0.20,
         velocidade:0, 
@@ -120,6 +131,7 @@ function criaFlappyBird() {
 
             flappyBird.velocidade = flappyBird.velocidade + flappyBird.gravidade;
             flappyBird.y = flappyBird.y + flappyBird.velocidade;
+            somCaiu.play();
         },
 
         movimentos: [
@@ -216,7 +228,7 @@ function criaCanos() {
         desenha() {
             canos.pares.forEach(function(par) {
                 const yRandom = par.y;
-                const espacamentoEntreCanos = 100;
+                const espacamentoEntreCanos = 200;
 
                 //cano do céu
                 const canoCeuX = par.x;
