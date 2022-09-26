@@ -6,3 +6,7 @@ https://htmlpreview.github.io/?https://github.com/mitchelinoue/games-javascript/
 
 
 https://htmlpreview.github.io/?https://github.com/mitchelinoue/games-javascript/blob/main/flappy-bird/index.html
+
+
+
+https://htmlpreview.github.io/?https://github.com/mitchelinoue/games-javascript/blob/main/pokedex/index.html
