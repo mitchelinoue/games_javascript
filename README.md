@@ -22,4 +22,8 @@ Pong (Clique na tela e use "w" e "s" para jogar):
 https://editor.p5js.org/mitchelinoue/full/vclf6QluB
 
 
-Crédito pelo ensinamento: Manual do Dev(Youtube) e  Dev Soutinho(Youtube)
+
+
+
+
+Crédito pelo ensinamento: Manual do Dev(Youtube), Dev Soutinho(Youtube) e Alura.
