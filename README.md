@@ -14,6 +14,9 @@ https://htmlpreview.github.io/?https://github.com/mitchelinoue/games-javascript/
 Jogo da Memória:
 https://rawcdn.githack.com/mitchelinoue/games-javascript/main/jogo-da-memoria/pages/game.html
 
+https://editor.p5js.org/mitchelinoue/full/ekjDRz3AB
+
+https://editor.p5js.org/mitchelinoue/full/vclf6QluB
 
 
 Crédito pelo ensinamento: Manual do Dev(Youtube) e  Dev Soutinho(Youtube)
