@@ -13,5 +13,5 @@ https://htmlpreview.github.io/?https://github.com/mitchelinoue/games-javascript/
 Pokedéx (Procure pelo número ou pelo nome):
 https://htmlpreview.github.io/?https://github.com/mitchelinoue/games-javascript/blob/main/pokedex/index.html
 
-
+Jogo da Memória:
 https://rawcdn.githack.com/mitchelinoue/games-javascript/main/jogo-da-memoria/pages/game.html
