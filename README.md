@@ -35,4 +35,4 @@ https://rawcdn.githack.com/mitchelinoue/games-javascript/main/jogo-cobrinha/inde
 
 
 
-Crédito pelo ensinamento: Manual do Dev(Youtube), Dev Soutinho(Youtube) e Alura.
+Crédito pelo ensinamento: Manual do Dev(Youtube), Dev Soutinho(Youtube), Programador BR(Youtube) e Alura.
