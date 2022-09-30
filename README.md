@@ -26,6 +26,10 @@ Pong (Clique na tela e use "w" e "s" para jogar):
 
 https://editor.p5js.org/mitchelinoue/full/vclf6QluB
 
+Jogo da Cobrinha (Clique nas setas para jogar):
+
+https://rawcdn.githack.com/mitchelinoue/games-javascript/main/jogo-cobrinha/index.html
+
 
 
 
