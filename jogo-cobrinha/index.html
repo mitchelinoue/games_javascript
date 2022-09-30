@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo da Cobrinha</title>
+  </head>
+
+  <body>
+    <canvas id="stage" width="600" height="600"></canvas>
+    <script type="text/javascript">
+      window.onload = function () {
+        var stage = document.getElementById("stage");
+        var ctx = stage.getContext("2d");
+        document.addEventListener("keydown", keyPush);
+        setInterval(game, 80);
+
+        const vel = 1;
+
+        var velX = (velY = 0);
+
+        var posicaoX = 10;//localização inicial da cabeça cobra
+        var posicaoY = 15;
+        
+        var tamQuadTela = 30;//dimensões da tela
+        var quantQuadTela = 20;
+
+        var appleX = (appleY = 15);//localização inicial da maça
+
+        var trilha = [];
+        cauda = 5;
+
+        function game() {
+          posicaoX += velX;
+          posicaoY += velY;
+          
+          if (posicaoX < 0) {//para transicionar nas bordas da tela
+            posicaoX = quantQuadTela - 1;
+          }
+          if (posicaoX > quantQuadTela - 1) {
+            posicaoX = 0;
+          }
+          if (posicaoY < 0) {
+            posicaoY = quantQuadTela - 1;
+          }
+          if (posicaoY > quantQuadTela - 1) {
+            posicaoY = 0;
+          }
+
+          ctx.fillStyle = "black";//pinta o canvas de preto
+          ctx.fillRect(0, 0, stage.width, stage.height);
+
+          ctx.fillStyle = "red";//pinta a maçã
+          ctx.fillRect(
+            appleX * tamQuadTela,
+            appleY * tamQuadTela,
+            tamQuadTela, tamQuadTela
+        );
+
+          ctx.fillStyle = "gray";//pinta a cobra
+          for (var i = 0; i < trilha.length; i++) {
+            ctx.fillRect(
+                trilha[i].x * tamQuadTela,
+                trilha[i].y * tamQuadTela,
+                tamQuadTela - 1,
+                tamQuadTela - 1
+                );
+
+            if (trilha[i].x == posicaoX && trilha[i].y == posicaoY) {
+              velX = velY = 0;
+              cauda = 5;
+            }
+          }
+
+            trilha.push({ x: posicaoX, y: posicaoY });
+
+          while (trilha.length > cauda) {
+            trilha.shift();
+          }
+
+          if (appleX == posicaoX && appleY == posicaoY) {
+            cauda++;
+            appleX = Math.floor(Math.random() * quantQuadTela);
+            appleY = Math.floor(Math.random() * quantQuadTela);
+          }
+        }
+       
+        function keyPush(event) { //movimentação da cobra pelas setas
+          switch (event.keyCode) {
+            case 37: // Left
+                velX = -vel;
+                velY = 0;
+              break;
+            case 38: // up
+                velX = 0;
+                velY = -vel;
+              break;
+            case 39: // right
+                velX = vel;
+                velY = 0;
+              break;
+            case 40: // down
+                velX = 0;
+                velY = vel;
+              break;
+            default:
+              break;
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
